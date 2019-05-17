@@ -99,7 +99,7 @@ public class SqlDBTools {
     private static void createUserInfo() {
         StringBuffer sb = new StringBuffer();
         sb.append("CREATE TABLE user_info (");
-        sb.append("id INTEGER, name TEXT, fileDir TEXT, printer TEXT)");
+        sb.append("id INTEGER, name TEXT, fileDir TEXT, printer TEXT, code TEXT)");
 
         executeSql(sb.toString());
     }

@@ -58,6 +58,7 @@
       <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.6.RELEASE" />
       <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.3.6.RELEASE" />
       <element id="library" level="project" name="Maven: org.yaml:snakeyaml:1.17" />
+      <element id="library" level="project" name="JNative" />
     </root>
   </artifact>
 </component>

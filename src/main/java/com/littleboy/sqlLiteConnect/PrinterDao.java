@@ -135,9 +135,9 @@ public class PrinterDao {
      * @param filePath 设置的打印文件存放路径
      * @param printer 打印机名称
      */
-    public void setUserInfo(String filePath, String printer) {
+    public void setUserInfo(String filePath, String printer, String code) {
         String name = UUID.randomUUID().toString().substring(15);
-        String sql = "insert into user_info(id, name, fileDir, printer) values(1, ' " + name + "', '" + filePath + "', '" + printer + "')";
+        String sql = "insert into user_info(id, name, fileDir, printer, code) values(1, ' " + name + "', '" + filePath + "', '" + printer + "', '" + code + "')";
 
         if (SqlDBTools.checkDatabase()) {
             SqlDBTools.executeSql(sql);

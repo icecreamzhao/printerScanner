@@ -41,6 +41,7 @@ public class FolderScanner {
                         // 获取数据库中设置的路径下的所有符合条件的文件
                         List<File> files = getFile(file);
                         for (File file : files) {
+                            System.out.println(file.getAbsolutePath());
                             try {
                                 // 获取数据库中设置的打印机的名称
                                 String printerName = sPrinterDao.getPrinterName();

@@ -14,9 +14,31 @@
         <jacob.version>1.19</jacob.version>
         <pdfbox.version>2.0.14</pdfbox.version>
         <sqlite.version>3.25.2</sqlite.version>
+        <!-- 应用程序名 -->
+        <app.filename>printerScannerSpringVersion</app.filename>
+        <!-- JavaFX应用的入口类 -->
+        <app.mainClass>com.littleboy.main.Main</app.mainClass>
+        <!-- app和launcher存放位置 -->
+        <app.dir>${project.build.directory}/app</app.dir>
+        <!-- 本地安装器存放位置 -->
+        <app.installerdir>${project.build.directory}/installer</app.installerdir>
+        <!-- 托管应用artifact的基础URL -->
+        <app.url>http://fxsamples.tornado.no/demo/</app.url>
+        <!-- Optional scp target for application artifacts hosted at the above url -->
+        <app.deploy.target>w48839@fxldemo.tornado.no:fxldemo</app.deploy.target>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>no.tornado</groupId>
+            <artifactId>fxlauncher</artifactId>
+            <version>1.0.20</version>
+        </dependency>
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>8.40.11</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

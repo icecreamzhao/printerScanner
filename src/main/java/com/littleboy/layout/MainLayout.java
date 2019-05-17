@@ -4,6 +4,7 @@ import com.littleboy.Event.MyEvent;
 import com.littleboy.sqlLiteConnect.PrinterDao;
 import com.littleboy.tools.FolderScanner;
 import com.littleboy.tools.PrintPdf;
+import com.littleboy.tools.PrinterFileHandler;
 import de.felixroske.jfxsupport.AbstractFxmlView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MainLayout extends AbstractFxmlView {
     /**
@@ -66,19 +68,41 @@ public class MainLayout extends AbstractFxmlView {
         okBtn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
+                // 如果没有设置目录
                 if (label.getText().equals("")) {
                     Alert alert = getNotSetDirectory();
                     alert.showAndWait();
-                } else if (choiceBox.getValue() == null || choiceBox.getValue().equals("")) {
+                }
+                // 如果没有设置打印机
+                else if (choiceBox.getValue() == null || choiceBox.getValue().equals("")) {
                     Alert alert = getNotSetPrinter();
                     alert.showAndWait();
-                } else {
+                }
+                // 成功设置
+                else {
                     PrinterDao printerDao = new PrinterDao();
+                    // 第一次设置
                     if (printerDao.getUserInfo() == null) {
-                        printerDao.setUserInfo(label.getText(), choiceBox.getValue().toString());
+                        String code = UUID.randomUUID().toString().substring(0, 6);
+                        printerDao.setUserInfo(label.getText(), choiceBox.getValue().toString(), code);
                         new FolderScanner().scannerFile();
-                    } else {
-                        printerDao.updateUserInfo(label.getText(), choiceBox.getValue().toString());
+                        // 显示小程序注册码
+                        Alert alert = showCode(code);
+                        PrinterFileHandler.pushCode(code);
+                        alert.showAndWait();
+                    }
+                    // 不是第一次设置
+                    else {
+                        String printerName = choiceBox.getValue().toString();
+                        String oldPrinterName = printerDao.getPrinterName();
+                        if (!printerName.equals(oldPrinterName)) {
+                            String code = UUID.randomUUID().toString().substring(0, 6);
+                            // 显示小程序注册码
+                            Alert alert = showCode(code);
+                            PrinterFileHandler.pushCode(code);
+                            alert.showAndWait();
+                        }
+                        printerDao.updateUserInfo(label.getText(), printerName);
                     }
                 }
             }
@@ -125,6 +149,10 @@ public class MainLayout extends AbstractFxmlView {
 
     private static Alert getNotSetDirectory() {
         return LayoutTools.setAlert("title", "警告", "您还未指定文件夹! ", Font.font("", FontWeight.NORMAL, 12));
+    }
+
+    private static Alert showCode(String code) {
+        return LayoutTools.setAlert("title", "提示", "您的小程序注册码为" + code, Font.font("", FontWeight.NORMAL, 12));
     }
 
     private static ChoiceBox getPrinterName() {
